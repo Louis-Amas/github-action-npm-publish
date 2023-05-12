@@ -1,0 +1,49 @@
+name: Publish Package to npmjs
+on:
+  release:
+    types: [released]
+jobs:
+  publish-mangrove-js:
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: write
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Add auto commit
+      uses: stefanzweifel/git-auto-commit-action@v4
+
+    - name: Node Install
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        registry-url: 'https://npm.pkg.github.com'
+
+    - name: create .npmrc
+      working-directory: packages/mangrove.js
+      run: |
+        echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
+        echo "registry=https://registry.npmjs.org/" >> .npmrc
+        echo "always-auth=true" >> .npmrc
+        cp .npmrc /tmp/.npmrc
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+    - name: Setup yarn
+      run: npm install -g yarn@2.4.3
+
+    - run: yarn --version
+    - run: yarn install --immutable
+    - run: yarn build
+
+    - name: Play with tag
+      run: yarn version $TAG
+      env:
+        TAG: "1.2.4-10-test"
+
+    # - name: mangrove.js - Publish
+    #   working-directory: packages/mangrove.js
+    #   run: cat /tmp/.npmrc &&  npm publish --tag next
