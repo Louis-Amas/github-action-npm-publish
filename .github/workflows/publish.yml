@@ -85,9 +85,7 @@ jobs:
         echo "version: $PACKAGE_VERSION"
         git switch -c "release/v$PACKAGE_VERSION"
         git add package.json yarn.lock
-        git -c commit.gpgsign=false commit
-        echo "Commiting"
-        git commit -m "version $PACKAGE_VERSION"
+        git -c commit.gpgsign=false commit -m "version $PACKAGE_VERSION"
         git tag -m "v$PACKAGE_VERSION" -s "v$PACKAGE_VERSION"
         git push --set-upstream origin release/v$PACKAGE_VERSION
         git push --tags
