@@ -1,0 +1,8 @@
+{
+  "name": "github-action-npm-publish",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Louis-Amas/github-action-npm-publish.git",
+  "author": "Louis-Amas <amaslouis@protonmail.com>",
+  "license": "MIT"
+}
