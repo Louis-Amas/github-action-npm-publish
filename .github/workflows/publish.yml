@@ -24,9 +24,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Add auto commit
-      uses: stefanzweifel/git-auto-commit-action@v4
-
     - name: Node Install
       uses: actions/setup-node@v3
       with:
@@ -57,6 +54,17 @@ jobs:
 
     - name: git status
       run: git status
+
+    - name: git version
+      run: |
+        git status
+        git add package.json yarn.lock
+        PACKAGE_VERSION=$(cat package.json \
+        | grep version \
+        | head -1 \
+        | awk -F: '{ print $2 }' \
+        | sed 's/[",]//g')
+        git commit -m $PACKAGE_VERSION
     # - name: Play with tag
     #   run: yarn version $TAG
     #   env:
