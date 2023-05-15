@@ -77,18 +77,20 @@ jobs:
     - name: git version
       run: |
         git status
-        git add package.json yarn.lock
+        git switch -c release/v$PACKAGE_VERSION
         PACKAGE_VERSION=$(cat package.json \
         | grep version \
         | head -1 \
         | awk -F: '{ print $2 }' \
         | sed 's/[",]//g')
+        git add package.json yarn.lock
         git commit -m $PACKAGE_VERSION
-        git push
-    # - name: Play with tag
-    #   run: yarn version $TAG
-    #   env:
-    #     TAG: "1.2.4-10-test"
+        git tag -m "v$PACKAGE_VERSION" -s "v$PACKAGE_VERSION"
+        git push --set-upstream origin release/v$PACKAGE_VERSION
+        git push --tags
 
-    # - name: mangrove.js - Publish
-    #   run: cat /tmp/.npmrc &&  npm publish --tag next
+        gh release create "v$PACKAGE_VERSION" --title "v$PACKAGE_VERSION" --notes ""
+        gh pr create --title "v$PACKAGE_VERSION" --body "" --label "release" # --reviewer "mangrovedao/all-devs"
+        gh pr merge --squash --delete-branch --auto
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
