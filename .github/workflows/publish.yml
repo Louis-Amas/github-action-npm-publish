@@ -78,7 +78,7 @@ jobs:
 
       env:
         INPUT_COMMIT_USER_NAME:  github-actions-bot
-        INPUT_COMMIT_USER_EMAIL: github-actions-bot-@users.noreply.github.com
+        INPUT_COMMIT_USER_EMAIL: github-actions-bot@users.noreply.github.com
 
     - name: git version
       run: |
