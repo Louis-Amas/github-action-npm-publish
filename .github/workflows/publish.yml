@@ -46,8 +46,9 @@ jobs:
       run: npm install -g yarn@2.4.3
 
     - run: yarn --version
-    - run: yarn install --immutable
-    - run: yarn build
+    - run: yarn
+    - run: echo $INPUT_revision
+    # - run: yarn build
 
     # - name: Play with tag
     #   run: yarn version $TAG
