@@ -44,6 +44,7 @@ jobs:
         echo "npmRegistryServer: \"https://npm.pkg.github.com\"" > .yarnrc.yml
         echo "npmAuthToken: $NODE_AUTH_TOKEN" >> .yarnrc.yml
         cp .yarnrc.yml /tmp/.yarnrc
+        cat .yarnrc.ynl
       env:
         NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
 
