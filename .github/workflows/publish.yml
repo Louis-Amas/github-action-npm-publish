@@ -34,8 +34,6 @@ jobs:
         registry-url: 'https://npm.pkg.github.com'
 
     - name: create .npmrc
-      working-directory: packages/mangrove.js
-      shell: bash
       run: |
         echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
         echo "registry=https://registry.npmjs.org/" >> .npmrc
@@ -57,5 +55,4 @@ jobs:
     #     TAG: "1.2.4-10-test"
 
     # - name: mangrove.js - Publish
-    #   working-directory: packages/mangrove.js
     #   run: cat /tmp/.npmrc &&  npm publish --tag next
