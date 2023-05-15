@@ -39,6 +39,14 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
+    - name: create .yarnrc
+      run: |
+        echo "npmRegistryServer: https://npm.pkg.github.com" > .yarnrc
+        echo "npmAuthToken: ${NODE_AUTH_TOKEN}" >> .yarnrc
+        cp .yarnrc /tmp/.yarnrc
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
     - name: Setup yarn
       run: npm install -g yarn@2.4.3
 
