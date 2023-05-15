@@ -77,8 +77,8 @@ jobs:
         git config --global user.email ${INPUT_COMMIT_USER_EMAIL}
 
       env:
-        INPUT_COMMIT_USER_NAME:  github-actions-bot[${{ github.actor }}]
-        INPUT_COMMIT_USER_EMAIL: github-actions-bot[${{ github.actor }}]@users.noreply.github.com
+        INPUT_COMMIT_USER_NAME:  github-actions[bot]
+        INPUT_COMMIT_USER_EMAIL: github-actions[bot]@users.noreply.github.com
 
     - name: git version
       run: |
@@ -91,7 +91,7 @@ jobs:
         echo "version: $PACKAGE_VERSION"
         git switch -c "release/v$PACKAGE_VERSION"
         git add package.json yarn.lock
-        git commit -m "version $PACKAGE_VERSION"
+        git commit -m "$PACKAGE_VERSION [$USER]"
         git tag -m "v$PACKAGE_VERSION" -s "v$PACKAGE_VERSION"
         git push --set-upstream origin release/v$PACKAGE_VERSION
         git push --tags
@@ -101,3 +101,4 @@ jobs:
         gh pr merge --squash --delete-branch --auto
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        USER: ${{ github.actor }}
