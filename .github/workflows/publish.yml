@@ -76,6 +76,7 @@ jobs:
         | awk -F: '{ print $2 }' \
         | sed 's/[",]//g')
         git commit -m $PACKAGE_VERSION
+        git push
     # - name: Play with tag
     #   run: yarn version $TAG
     #   env:
