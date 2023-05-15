@@ -16,9 +16,7 @@ on:
 jobs:
   publish-mangrove-js:
     runs-on: ubuntu-latest
-    permissions:
-      checks: write
-      contents: write
+    permissions: write-all
 
     steps:
     - name: Checkout
