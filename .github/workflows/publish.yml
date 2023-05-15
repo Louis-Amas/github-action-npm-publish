@@ -81,8 +81,7 @@ jobs:
         | grep version \
         | head -1 \
         | awk -F: '{ print $2 }' \
-        | sed 's/[",]//g') \
-        | cut -c2-
+        | sed 's/[",]//g')
         echo $PACKAGE_VERSION
         git switch -c release/v$PACKAGE_VERSION
         git add package.json yarn.lock
