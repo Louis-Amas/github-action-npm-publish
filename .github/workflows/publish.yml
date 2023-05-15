@@ -30,15 +30,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         registry-url: 'https://npm.pkg.github.com'
 
-    - name: create .npmrc
-      run: |
-        echo "//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN" > .npmrc
-        echo "registry=https://registry.npmjs.org/" >> .npmrc
-        echo "always-auth=true" >> .npmrc
-        cp .npmrc /tmp/.npmrc
-      env:
-        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
     - name: create .yarnrc
       run: |
         echo "npmRegistryServer: \"https://registry.npmjs.org\"" > .yarnrc.yml
