@@ -45,15 +45,23 @@ jobs:
     - run: yarn --version
     - run: yarn
 
-    - name: bump version
+    - name: Bump version
       run: |
         echo $INPUT_REVISION
         npm version --no-git-tag-version $INPUT_REVISION
       env:
         INPUT_REVISION: ${{ inputs.revision }}
 
-    - name: git status
-      run: git status
+    - name: Publish
+      run: |
+        if [ "$INPUT_REVISION" = "prerelease" ]; then
+          tag="next"
+        else
+          tag="latest"
+        fi
+        yarn npm publish --access public --tag $tag
+      env:
+        INPUT_REVISION: ${{ inputs.revision }}
 
     - name: setup git
       run: |
