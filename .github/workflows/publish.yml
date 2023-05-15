@@ -49,10 +49,11 @@ jobs:
     - run: yarn
 
     - name: bump version
-      using: composite
       run: |
         echo $INPUT_REVISION
         npm version --no-git-tag-version $INPUT_REVISION
+      env:
+        INPUT_REVISION: ${{ inputs.revision }}
 
     - name: git status
       run: git status
