@@ -52,7 +52,7 @@ jobs:
       run: npm version --no-git-tag-version $INPUT_REVISION
 
     - name: git status
-      run: npm version --no-git-tag-version $INPUT_REVISION
+      run: git status
     # - name: Play with tag
     #   run: yarn version $TAG
     #   env:
