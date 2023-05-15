@@ -47,7 +47,7 @@ jobs:
 
     - run: yarn --version
     - run: yarn
-    - run: echo $INPUT_revision
+    - run: echo $INPUT_REVISION
     # - run: yarn build
 
     # - name: Play with tag
