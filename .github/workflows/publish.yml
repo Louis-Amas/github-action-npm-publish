@@ -82,7 +82,8 @@ jobs:
         | grep version \
         | head -1 \
         | awk -F: '{ print $2 }' \
-        | sed 's/[",]//g')
+        | sed 's/[",]//g') \
+        | cut -c2-
         git add package.json yarn.lock
         git commit -m $PACKAGE_VERSION
         git tag -m "v$PACKAGE_VERSION" -s "v$PACKAGE_VERSION"
