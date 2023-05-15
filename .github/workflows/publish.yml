@@ -63,7 +63,7 @@ jobs:
         git config --global user.email ${INPUT_COMMIT_USER_EMAIL}
 
       env:
-        INPUT_COMMIT_USER:  github-actions-bot[${{ github.actor }}]
+        INPUT_COMMIT_USER_NAME:  github-actions-bot[${{ github.actor }}]
         INPUT_COMMIT_USER_EMAIL: github-actions-bot[${{ github.actor }}]@users.noreply.github.com
 
     - name: git version
