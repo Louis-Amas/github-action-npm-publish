@@ -72,7 +72,7 @@ jobs:
         echo "# Next version" > CHANGELOG-new.md
         echo >> CHANGELOG-new.md
         echo "# $PACKAGE_VERSION" >> CHANGELOG-new.md
-        echo -e $INPUT_CHANGELOG >> CHANGELOG-new.md
+        echo -e $INPUT_CHANGELOG | sed -E 's/^-([a-zA-Z0-9])/- \1/'  >> CHANGELOG-new.md # sed is formating CHANGELOG to create Markdown bulletlist
         echo >> CHANGELOG-new.md
         tail --lines=+3 CHANGELOG.md >>CHANGELOG-new.md
         mv CHANGELOG-new.md CHANGELOG.md
