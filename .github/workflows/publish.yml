@@ -70,6 +70,7 @@ jobs:
         | awk -F: '{ print $2 }' \
         | sed 's/[",]//g' | cut -c2- )
         echo "# Next version" > CHANGELOG-new.md
+        echo >> CHANGELOG-new.md
         echo "# $PACKAGE_VERSION" >> CHANGELOG-new.md
         echo -e $INPUT_CHANGELOG >> CHANGELOG-new.md
         echo >> CHANGELOG-new.md
