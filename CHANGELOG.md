@@ -1,5 +1,7 @@
 # Next version
 
+# 7.0.3-1
+
 # 7.0.3-0
 
 - Bump mangrove-core to 1.5.1-1
