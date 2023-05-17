@@ -1,5 +1,9 @@
 # Next version\n
-# 7.0.1-13
+# 7.0.1-14
+
+foo
+bar
+
 
 - test
 - test
