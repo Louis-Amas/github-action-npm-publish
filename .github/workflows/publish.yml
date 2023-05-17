@@ -11,14 +11,25 @@ on:
         - prerelease
         - minor
         - major
-  # release:
-  #   types: [released]
+        - patch
+      changelog:
+        description: 'Changelog update'
+        required: true
+        type: text
 jobs:
   publish-mangrove-js:
     runs-on: ubuntu-latest
     permissions: write-all
 
     steps:
+    - name: Infos
+      run: |
+        echo "revision: $INPUT_REVISION"
+        echo "changelog: $INPUT_CHANGELOG"
+      env:
+        INPUT_REVISION: ${{ inputs.revision }}
+        INPUT_CHANGELOG: ${{ inputs.changelog }}
+
     - name: Checkout
       uses: actions/checkout@v3
 
