@@ -69,7 +69,7 @@ jobs:
         | head -1 \
         | awk -F: '{ print $2 }' \
         | sed 's/[",]//g' | cut -c2- )
-        echo "# Next version\n" > CHANGELOG-new.md
+        echo -e "# Next version\n" > CHANGELOG-new.md
         echo -e "# $PACKAGE_VERSION\n" >> CHANGELOG-new.md
         echo -e $INPUT_CHANGELOG | sed -E 's/^-([a-zA-Z0-9])/- \1/'  >> CHANGELOG-new.md # sed is formating CHANGELOG to create Markdown bulletlist
         echo >> CHANGELOG-new.md
@@ -83,6 +83,7 @@ jobs:
       run: |
         if [ "$INPUT_REVISION" = "prerelease" ]; then
           tag="next"
+        
         else
           tag="latest"
         fi
