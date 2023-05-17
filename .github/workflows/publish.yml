@@ -25,7 +25,7 @@ jobs:
     - name: Infos
       run: |
         echo "revision: $INPUT_REVISION"
-        echo "changelog: $INPUT_CHANGELOG"
+        printf "changelog: %s" $INPUT_CHANGELOG
       env:
         INPUT_REVISION: ${{ inputs.revision }}
         INPUT_CHANGELOG: ${{ inputs.changelog }}
