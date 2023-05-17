@@ -12,10 +12,6 @@ on:
         - minor
         - major
         - patch
-      changelog:
-        description: 'Changelog update'
-        required: true
-        type: text
 jobs:
   publish-mangrove-js:
     runs-on: ubuntu-latest
@@ -69,15 +65,16 @@ jobs:
         | head -1 \
         | awk -F: '{ print $2 }' \
         | sed 's/[",]//g' | cut -c2- )
-        echo -e "# Next version\n" > CHANGELOG-new.md
-        echo -e "# $PACKAGE_VERSION\n" >> CHANGELOG-new.md
-        echo -e $INPUT_CHANGELOG | sed -E 's/^-([a-zA-Z0-9])/- \1/'  >> CHANGELOG-new.md # sed is formating CHANGELOG to create Markdown bulletlist
-        echo >> CHANGELOG-new.md
+        cat << EOF > CHANGELOG-new.md
+        # Next version
+
+        # $PACKAGE_VERSION
+
+        EOF
         tail --lines=+3 CHANGELOG.md >>CHANGELOG-new.md
         mv CHANGELOG-new.md CHANGELOG.md
       env:
         INPUT_REVISION: ${{ inputs.revision }}
-        INPUT_CHANGELOG: ${{ inputs.changelog }}
 
     - name: Publish
       run: |
@@ -118,7 +115,8 @@ jobs:
         git push --set-upstream origin release/v$PACKAGE_VERSION
         git push --tags
 
-        gh release create "v$PACKAGE_VERSION" --title "v$PACKAGE_VERSION" --notes ""
+        export RELEASE_NOTES=`sed -n "/^# $PACKAGE_VERSION/,/^#/p" CHANGELOG.md | grep -v "^#" | sed -e :a -e '/./,$!d;/^\n*$/{$d;N;};/\n$/ba'`
+        gh release create "v$PACKAGE_VERSION" --title "v$PACKAGE_VERSION" --notes "$RELEASE_NOTES"
         gh pr create --title "v$PACKAGE_VERSION" --body "" # --label "release" # --reviewer "mangrovedao/all-devs"
         gh pr merge --squash --delete-branch --auto
       env:
