@@ -64,8 +64,20 @@ jobs:
       run: |
         echo $INPUT_REVISION
         npm version --no-git-tag-version $INPUT_REVISION
+        PACKAGE_VERSION=$(cat package.json \
+        | grep version \
+        | head -1 \
+        | awk -F: '{ print $2 }' \
+        | sed 's/[",]//g' | cut -c2- )
+        echo "# Next version" > CHANGELOG-new.md
+        echo "# $PACKAGE_VERSION" >> CHANGELOG-new.md
+        echo -e $INPUT_CHANGELOG >> CHANGELOG-new.md
+        echo >> CHANGELOG-new.md
+        tail --lines=+3 CHANGELOG.md >>CHANGELOG-new.md
+        mv CHANGELOG-new.md CHANGELOG.md
       env:
         INPUT_REVISION: ${{ inputs.revision }}
+        INPUT_CHANGELOG: ${{ inputs.changelog }}
 
     - name: Publish
       run: |
@@ -99,7 +111,7 @@ jobs:
         | sed 's/[",]//g' | cut -c2- )
         echo "version: $PACKAGE_VERSION"
         git switch -c "release/v$PACKAGE_VERSION"
-        git add package.json yarn.lock
+        git add package.json yarn.lock CHANGELOG.md
         git commit -m "$PACKAGE_VERSION [$USER]"
         git tag -m "v$PACKAGE_VERSION" -s "v$PACKAGE_VERSION"
         git push --set-upstream origin release/v$PACKAGE_VERSION
